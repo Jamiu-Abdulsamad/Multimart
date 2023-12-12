@@ -1,0 +1,134 @@
+.product__details {
+  margin-top: 110px;
+}
+
+.product__details h2 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+.product__rating {
+  color: coral;
+}
+
+.product__rating p span {
+  color: coral;
+  font-weight: 500;
+}
+
+.product__price {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.product__rating span i {
+  color: coral;
+}
+
+.tab__wrapper h6 {
+  color: var(--primary-color);
+  font-weight: 500;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin-bottom: 35px;
+}
+
+.tab__content {
+  line-height: 30[x];
+}
+
+.active__tab {
+  font-weight: 600 !important ;
+}
+.active__tab {
+  border-bottom: 2px solid var(--primary-color);
+}
+.active__tab {
+  position: relative;
+  border-bottom: 2px solid transparent; /* Start with a transparent underline */
+  transition: all 0.3s ease; /* Adjust the transition duration and easing function */
+
+  /* Create the sliding effect with a pseudo-element */
+  &:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: all 0.3s ease; /* Adjust the transition duration and easing function */
+  }
+}
+
+/* Set the initial state of the pseudo-element */
+.active__tab:before {
+  width: 100%;
+}
+
+/* Hover effect to reveal the sliding underline */
+.active__tab:hover:before {
+  width: 0;
+}
+.review__wrapper ul li span {
+  color: coral;
+  font-weight: 600;
+}
+
+.review__wrapper ul li p {
+  margin-top: 10px;
+}
+
+.review__form {
+  width: 70%;
+  margin: auto;
+  margin-bottom: 30px;
+}
+
+.review__form h4{
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.form__group input,
+.form__group textarea {
+  width: 80%;
+  border: 1px solid var(--primary-color);
+  border-radius: 5px;
+  padding: 8px 20px;
+}
+
+.form__group {
+  margin-bottom: 30px;
+}
+
+.form__group input:focus, 
+.form__group textarea:focus {
+  outline: none;
+}
+
+.form__group span{
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+    color: coral;
+    cursor: pointer;
+}
+
+.related__title{
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 30px;
+
+}
+
+@media only screen and (max-width: 768px){
+  .product__details h2{
+    font-size: 1.3rem;
+  }
+  .rating__group{
+    column-gap: 0.5rem !important;
+
+  }
+}
