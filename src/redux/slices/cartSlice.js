@@ -8,6 +8,7 @@ const initialState = {
 
 // Load cart items from local storage if available
 const savedCart = localStorage.getItem("cart");
+
 if (savedCart) {
   initialState.cartItems = JSON.parse(savedCart);
   initialState.totalQuantity = initialState.cartItems.reduce(
@@ -75,7 +76,8 @@ const cartSlice = createSlice({
         localStorage.setItem("cart", JSON.stringify(state.cartItems));
       }
     },
-    clearCart: (state) => {
+    clearCart: (state, action) => {
+      // console.log("clearing cart");
       // Clear the cart items, total amount, and total quantity
       state.cartItems = [];
       state.totalAmount = 0;

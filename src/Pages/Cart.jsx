@@ -14,7 +14,11 @@ const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalAmount = useSelector((state) => state.cart.totalAmount);
   // const totalQuantity = useSelector((state) => state.cart.totalQuantity);
-  
+  const dispatch = useDispatch();
+  const handleClearCart = () => {
+    dispatch(cartActions.clearCart());
+  };
+
   return (
     <Helmet title="Cart">
       <CommonSection title="Shopping Cart" />
@@ -24,8 +28,8 @@ const Cart = () => {
             <Col lg="9">
               {cartItems.length === 0 ? (
                 <div>
-                <h4 className="fs-4 text-center">No item here yet!!! </h4>
-                <Link to="/shop">Continue Shopping?</Link>
+                  <h4 className="fs-4 text-center">No item here yet!!! </h4>
+                  <Link to="/shop">Continue Shopping?</Link>
                 </div>
               ) : (
                 <table className="table bordered">
@@ -64,6 +68,9 @@ const Cart = () => {
               <button className="buy__btn w-100 mt-3">
                 <Link to="/shop">Continue Shopping</Link>
               </button>
+              {cartItems.length > 0 && <button className="buy__btn" onClick={handleClearCart}>
+                clear cart
+              </button>}
             </Col>
           </Row>
         </Container>
@@ -78,22 +85,25 @@ const Tr = ({ item }) => {
     dispatch(cartActions.removeItem(item.id));
     toast.success("item removed from cart");
   };
+
   return (
-    <tr>
-      <td>
-        <img src={item.imgUrl} alt="td-img" />
-      </td>
-      <td>{item.productName}</td>
-      <td>${item.price}</td>
-      <td style={{ paddingLeft: '18px' }}>{item.quantity}</td>
-      <td>
-        <motion.i
-          whileTap={{ scale: 1.2 }}
-          className="ri-delete-bin-line"
-          onClick={deleteProduct}
-        ></motion.i>
-      </td>
-    </tr>
+    <>
+      <tr>
+        <td>
+          <img src={item.imgUrl} alt="td-img" />
+        </td>
+        <td>{item.productName}</td>
+        <td>${item.price}</td>
+        <td style={{ paddingLeft: "18px" }}>{item.quantity}</td>
+        <td>
+          <motion.i
+            whileTap={{ scale: 1.2 }}
+            className="ri-delete-bin-line"
+            onClick={deleteProduct}
+          ></motion.i>
+        </td>
+      </tr>
+    </>
   );
 };
 
