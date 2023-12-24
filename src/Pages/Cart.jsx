@@ -1,19 +1,17 @@
 import React from "react";
-import "../Styles/cart.css";
 import Helmet from "../components/Helmet/Helmet";
 import { motion } from "framer-motion";
 import CommonSection from "../components/UI/CommonSection";
 import { Container, Row, Col } from "reactstrap";
-// import tdImg from "../assets/images/arm-chair-01.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import { cartActions } from "../redux/slices/cartSlice";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import "../Styles/cart.css";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalAmount = useSelector((state) => state.cart.totalAmount);
-  // const totalQuantity = useSelector((state) => state.cart.totalQuantity);
   const dispatch = useDispatch();
   const handleClearCart = () => {
     dispatch(cartActions.clearCart());
@@ -68,9 +66,11 @@ const Cart = () => {
               <button className="buy__btn w-100 mt-3">
                 <Link to="/shop">Continue Shopping</Link>
               </button>
-              {cartItems.length > 0 && <button className="buy__btn" onClick={handleClearCart}>
-                clear cart
-              </button>}
+              {cartItems.length > 0 && (
+                <button className="buy__btn" onClick={handleClearCart}>
+                  clear cart
+                </button>
+              )}
             </Col>
           </Row>
         </Container>

@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./Header.css";
 import { motion } from "framer-motion";
 import logo from "../../../src/assets/images/eco-logo.png";
 import userIcon from "../../assets/images/user-icon.png";
@@ -12,11 +11,14 @@ import { auth } from "../../firebase.config";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { cartActions } from "../../redux/slices/cartSlice";
+import "./Header.css";
+
 const Header = () => {
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
-  const navigate = useNavigate();
   const [LogoutVisible, setLogoutVisible] = useState(false);
   const { currentUser } = useAuth();
+  const navigate = useNavigate();
+
   const navLinks = [
     {
       path: "home",
@@ -30,6 +32,7 @@ const Header = () => {
       path: "cart",
       display: "Cart",
     },
+    
   ];
 
   const dispatch = useDispatch();
@@ -67,6 +70,10 @@ const Header = () => {
 
   const navigateToCart = () => {
     navigate("/cart");
+  };
+
+  const navigateToLogin = () => {
+    navigate("/login");
   };
 
   const profileActionRef = useRef(null);
@@ -137,7 +144,6 @@ const Header = () => {
                     LogoutVisible ? "show__profileActions" : ""
                   }`}
                   ref={profileActionRef}
-                  // ref={profileActionRef}
                   onClick={toggleProfileActions}
                 >
                   {currentUser ? (
@@ -145,8 +151,12 @@ const Header = () => {
                   ) : (
                     <div className="d-flex justify-content-center align-items-center flex-column">
                       <Link to="/signup">Signup</Link>
-
                       <Link to="/login">Login</Link>
+                     <div onClick={navigateToLogin}>
+                     <Link  to="/dashboard">
+                        Dashboard
+                      </Link>
+                      </div> 
                     </div>
                   )}
                 </div>

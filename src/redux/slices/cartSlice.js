@@ -77,13 +77,9 @@ const cartSlice = createSlice({
       }
     },
     clearCart: (state, action) => {
-      // console.log("clearing cart");
-      // Clear the cart items, total amount, and total quantity
       state.cartItems = [];
       state.totalAmount = 0;
       state.totalQuantity = 0;
-
-      // Update local storage
       localStorage.removeItem("cart");
     },
   },

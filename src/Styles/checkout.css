@@ -7,6 +7,11 @@
     background: var(--primary-color);
     color:#fff;
     border-radius: 5px;
+    margin-top: 56px;
+}
+
+.form{
+    width: 70%;
 }
 
 .checkout__cart h6, h4{

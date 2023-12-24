@@ -7,12 +7,15 @@ import { motion } from "framer-motion";
 import "../Styles/Homepage.css";
 import homePageImage from "../assets/images/homePage-img.png";
 import Services from "../Services/Services";
-import products from "../assets/data/products";
+// import products from "../assets/data/products";
 import ProductList from "../components/UI/ProductList";
 import Clock from "../components/UI/Clock";
 import counterImg from "../assets/images/counter-timer-img.png";
+import useGetData from "../hooks/useGetData";
 
 const Homepage = () => {
+
+  const {data:products, loading} = useGetData('products')
   const year = new Date().getFullYear();
   const [trendingProducts, setTrendingProducts] = useState([]);
   const [bestSales, setBestSales] = useState([[]]);
@@ -40,7 +43,7 @@ const Homepage = () => {
     setMobileProducts(filteredMobileProducts);
     setWirelessProducts(filteredWirelessProducts);
     setPopularProducts(filteredPopularProducts)
-  }, []);
+  }, [products]);
   
 
   return (
@@ -85,7 +88,12 @@ const Homepage = () => {
               <Col lg="12" className="text-center">
                 <h2 className="section__title">Trending Products</h2>
               </Col>
-              <ProductList data={trendingProducts} />
+
+              {
+                loading? <h5 className="fw-bold">Loading......</h5> :
+                <ProductList data={trendingProducts} />
+              }
+             
             </Row>
           </Container>
         </section>
@@ -96,7 +104,10 @@ const Homepage = () => {
               <Col lg="12" className="text-center">
                 <h2 className="section__title">Best Sales</h2>
               </Col>
-              <ProductList data={bestSales} />
+              {
+                loading? <h5 className="fw-bold">Loading......</h5> :
+                <ProductList data={bestSales} />
+              }
             </Row>
           </Container>
         </section>
@@ -132,8 +143,14 @@ const Homepage = () => {
               <Col lg="12" className="text-center">
                 <h2 className="section__title">New Arrivals</h2>
               </Col>
-              <ProductList data={mobileProducts} />
-              <ProductList data={wirelessProducts} />
+              {
+                loading? <h5 className="fw-bold">Loading......</h5> :
+                <ProductList data={mobileProducts} />
+              }
+              {
+                loading? <h5 className="fw-bold">Loading......</h5> :
+                <ProductList data={wirelessProducts} />
+              }
             </Row>
           </Container>
         </section>
@@ -144,7 +161,10 @@ const Homepage = () => {
               <Col lg="12" className="text-center mb-5">
                 <h2 className="section__title">Popular in category</h2>
               </Col>
-              <ProductList data={popularProducts} />
+              {
+                loading? <h5 className="fw-bold">Loading......</h5> :
+                <ProductList data={popularProducts} />
+              }
             </Row>
           </Container>
         </section>

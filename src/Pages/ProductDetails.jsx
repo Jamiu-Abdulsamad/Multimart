@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { Container, Row, Col } from "reactstrap";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import products from "../assets/data/products";
 import Helmet from "../components/Helmet/Helmet";
 import "../Styles/product-details.css";
 import ProductList from "../components/UI/ProductList";
@@ -10,22 +9,41 @@ import CommonSection from "../components/UI/CommonSection";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../redux/slices/cartSlice";
 import { toast } from "react-toastify";
+import { db } from "../firebase.config";
+import {doc, getDoc} from 'firebase/firestore'
+import useGetData from "../hooks/useGetData";
+
 
 const ProductDetails = () => {
+  const [product, setProduct] = useState({})
   const [tab, setTab] = useState("desc");
   const [rating, setRating] = useState(null);
   const reviewUser = useRef("");
   const reviewMsg = useRef("");
   const dispatch = useDispatch();
   const { id } = useParams();
-  const product = products.find((item) => item.id === id);
+  const {data: products} = useGetData('products')
 
+    const docRef = doc(db, 'products', id)
+
+    useEffect(()=>{
+      const getProduct = async()=>{
+        const docSnap = await getDoc(docRef)
+
+        if(docSnap.exists()){
+          setProduct(docSnap.data())
+        } else{
+          console.log('No Product')
+        }
+      }
+      getProduct()
+    })
   const {
     imgUrl,
     productName,
     price,
-    avgRating,
-    reviews,
+    // avgRating,
+    // reviews,
     description,
     shortDesc,
     category,
@@ -44,7 +62,6 @@ const ProductDetails = () => {
       rating,
     };
     toast.success('Review submitted successfully')
-    // console.log(reviewUserName, reviewUserMsg, rating);
   };
 
   useEffect(() => {
@@ -92,9 +109,7 @@ const ProductDetails = () => {
                       <i className="ri-star-half-s-line" />
                     </span>
                   </div>
-                  <p>
-                    [ <span>{avgRating}</span> ratings ]
-                  </p>
+              
                 </div>
                 <div className="d-flex align-items-center gap-5">
                   <span className="product__price">${price}</span>
@@ -129,7 +144,7 @@ const ProductDetails = () => {
                   className={`${tab === "rev" ? "active__tab" : ""}`}
                   onClick={() => setTab("rev")}
                 >
-                  Reviews [{reviews.length}]
+                  Reviews 
                 </h6>
               </div>
               {tab === "desc" ? (
@@ -139,7 +154,7 @@ const ProductDetails = () => {
               ) : (
                 <div className="product__review">
                   <div className="review__wrapper">
-                    <ul>
+                    {/* <ul>
                       {reviews.map((item, index) => (
                         <li key={index} className="mb-4">
                           <h6>kesh</h6>
@@ -147,7 +162,7 @@ const ProductDetails = () => {
                           <p>{item.text}</p>
                         </li>
                       ))}
-                    </ul>
+                    </ul> */}
 
                     <div className="review__form">
                       <h4>Leave your experience</h4>

@@ -3,16 +3,15 @@ import { PaystackButton } from "react-paystack";
 import { Container, Row, Col, Form, FormGroup } from "reactstrap";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/CommonSection";
-import "../Styles/checkout.css";
 import { useSelector, useDispatch } from "react-redux";
 import { cartActions } from "../redux/slices/cartSlice";
 import { toast } from "react-toastify";
+import "../Styles/checkout.css";
 
 const Checkout = () => {
   const publicKey = "pk_test_0bbe79662c8ca5f40d7352676fcb5eca57689fe1";
   const totalAmount = useSelector((state) => state.cart.totalAmount);
   const totalQty = useSelector((state) => state.cart.totalQuantity);
-  // const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -21,12 +20,10 @@ const Checkout = () => {
   const [city, setCity] = useState("");
   const [postalcode, setPostalcode] = useState("");
   const [country, setCountry] = useState("");
-  // const [amount, setTotalAmount] = useState(totalAmount)
 
   const dispatch = useDispatch();
 
-  const handlePayment = (e) => {
-    e.preventDefault();
+  const handlePayment = () => {
     const resetForm = () => {
       setEmail("");
       setName("");
@@ -55,12 +52,7 @@ const Checkout = () => {
     },
     publicKey,
     text: "Pay Now",
-    callback: () => {
-      handlePayment();
-      console.log("Payment in progress");
-    },
-
-    onsuccess: handlePayment,
+    onSuccess: () => handlePayment(),
     onClose: () => toast.success("Payment cancelled"),
   };
 
@@ -72,7 +64,7 @@ const Checkout = () => {
           <Row>
             <Col lg="8">
               <h6 className="mb-4">Billing Information</h6>
-              <Form>
+              <Form className="form">
                 <FormGroup className="form__group">
                   <input
                     id="name"
@@ -161,9 +153,6 @@ const Checkout = () => {
                 <h4>
                   Total Cost: <span>${totalAmount}</span>
                 </h4>
-                {/* <button className="buy__btn auth__btn w-100">
-                  Place an order
-                </button> */}
                 <PaystackButton
                   className="buy__btn auth__btn w-100"
                   {...componentProps}
